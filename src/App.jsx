@@ -97,7 +97,9 @@ function App() {
             onCancelClick={setSelectedPage}
           />
         )}
-        {selectedPage === "No project selected" && <ProjectPage />}
+        {selectedPage === "No project selected" && (
+          <ProjectPage onAddProject={handleAddProjectClick} />
+        )}
         {selectedPage === "Project" && (
           <Project
             project={projects[currentProjectIndex]}
