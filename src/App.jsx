@@ -6,7 +6,7 @@ import { useState } from "react";
 function App() {
   const [projects, setProjects] = useState([]);
   const [selectedPage, setSelectedPage] = useState("No project selected");
-  const [currentProject, setCurrentProject] = useState({});
+  const [currentProjectIndex, setCurrentProjectIndex] = useState();
 
   function handleAddProjectClick() {
     setSelectedPage("Add project");
@@ -14,9 +14,11 @@ function App() {
 
   function saveProject(title, description, dueDate) {
     setProjects((prevProjects) => {
+      const index = prevProjects.length === 0 ? 0 : prevProjects.length;
       const updateProjects = [
         ...prevProjects,
         {
+          index: index,
           title: title,
           description: description,
           dueDate: dueDate,
@@ -25,42 +27,31 @@ function App() {
       ];
 
       setSelectedPage("Project");
-      setCurrentProject({
-        index: updateProjects.length - 1,
-        title: updateProjects[updateProjects.length - 1].title,
-        description: updateProjects[updateProjects.length - 1].description,
-        dueDate: updateProjects[updateProjects.length - 1].dueDate,
-        tasks: updateProjects[updateProjects.length - 1].tasks,
-      });
+      setCurrentProjectIndex(updateProjects.length - 1);
 
       return updateProjects;
     });
   }
 
-  function updateTasks(newTask) {
+  function updateTasks(newTask, projectIndex) {
     setProjects((prevProjects) => {
       const updateProject = [...prevProjects];
 
-      updateProject[currentProject.index].tasks.push(newTask);
+      updateProject[projectIndex].tasks.push(newTask);
 
       return updateProject;
     });
   }
 
   function handleOpenProjectClick(index) {
-    setCurrentProject(() => {
-      const updateCurrentProject = { ...projects[index], index: index };
-
-      return updateCurrentProject;
-    });
+    setCurrentProjectIndex(index);
     setSelectedPage("Project");
   }
 
-  function handleRemoveTask(index) {
+  function handleRemoveTask(index, projectIndex) {
     setProjects((prevProjects) => {
       const updateProject = [...prevProjects];
-
-      updateProject[currentProject.index].tasks.splice(index, 1);
+      updateProject[projectIndex].tasks.splice(index, 1);
 
       return updateProject;
     });
@@ -70,6 +61,9 @@ function App() {
     setProjects((prevProjects) => {
       const updateProjects = [...prevProjects];
       updateProjects.splice(index, 1);
+      updateProjects.map((project) => {
+        project.index = project.index !== 0 ? project.index - 1 : 0;
+      });
 
       return updateProjects;
     });
@@ -106,7 +100,7 @@ function App() {
         {selectedPage === "No project selected" && <ProjectPage />}
         {selectedPage === "Project" && (
           <Project
-            currentProject={currentProject}
+            project={projects[currentProjectIndex]}
             onUpdateTask={updateTasks}
             onDeleteTask={handleRemoveTask}
             onDeleteProject={deleteProject}
