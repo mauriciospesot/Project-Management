@@ -6,6 +6,11 @@ export default function Project({
   onUpdateTask,
   onDeleteProject,
 }) {
+  const formattedDate = new Date(project.dueDate).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
   const newTask = useRef();
 
   function handleAddTaskClick() {
@@ -27,8 +32,8 @@ export default function Project({
           Delete
         </button>
       </div>
-      <p>{project.dueDate}</p>
-      <p className="mt-5">{project.description}</p>
+      <p>{formattedDate}</p>
+      <p className="mt-5 whitespace-pre-wrap">{project.description}</p>
       <hr className="mt-5 border-2" />
       <h1 className="mt-5 font-bold">Tasks</h1>
       <input ref={newTask} className="bg-gray-50 mt-3 mr-3" type="text" />

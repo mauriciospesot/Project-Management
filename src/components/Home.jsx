@@ -1,4 +1,4 @@
-export default function ProjectPage({ onAddProject }) {
+export default function Home({ onAddProject }) {
   return (
     <>
       <h2 className="text-2xl font-semibold">No Project Selected</h2>

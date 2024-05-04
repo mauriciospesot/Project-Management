@@ -35,19 +35,28 @@ export default function ProjectForm({ onSaveClick, onCancelClick }) {
       </div>
 
       <div className="flex flex-col">
-        <label className="uppercase font-bold text-slate-500" htmlFor="">
+        <label
+          className="uppercase font-bold text-slate-500 text-sm my-4"
+          htmlFor=""
+        >
           Title
         </label>
         <input ref={title} className="bg-gray-50" type="text" />
       </div>
       <div className="flex flex-col">
-        <label className="uppercase font-bold text-slate-500" htmlFor="">
+        <label
+          className="uppercase font-bold text-slate-500 text-sm my-4"
+          htmlFor=""
+        >
           Description
         </label>
-        <textarea ref={description} className="bg-gray-50" type="text" />
+        <textarea ref={description} className="bg-gray-50 w-full" type="text" />
       </div>
       <div className="flex flex-col">
-        <label className="uppercase font-bold text-slate-500" htmlFor="">
+        <label
+          className="uppercase font-bold text-slate-500 text-sm my-4"
+          htmlFor=""
+        >
           Due date
         </label>
         <input ref={dueDate} className="bg-gray-50" type="date" />

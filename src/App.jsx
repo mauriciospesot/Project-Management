@@ -1,5 +1,5 @@
-import ProjectForm from "./components/ProjectForm.jsx";
-import ProjectPage from "./components/ProjectPage.jsx";
+import NewProjectForm from "./components/NewProjectForm.jsx";
+import Home from "./components/Home.jsx";
 import Project from "./components/Project.jsx";
 import { useState } from "react";
 
@@ -72,18 +72,23 @@ function App() {
 
   return (
     <div className="flex h-screen">
-      <div className="w-64 bg-gray-950 text-white p-5">
-        <h1 className="text-lg font-bold uppercase">Your projects</h1>
+      <div className="w-64 bg-gray-950  p-5">
+        <h1 className="text-lg font-bold uppercase text-stone-200">
+          Your projects
+        </h1>
         <button
-          className="rounded bg-neutral-700 p-2 mt-8"
+          className="rounded bg-stone-700 text-stone-400 px-4 py-2 text-xs mt-8 hover:bg-stone-600 hover:text-stone-100"
           onClick={handleAddProjectClick}
         >
           + Add Project
         </button>
         <ol className="mt-7">
           {projects.map((item, index) => (
-            <li key={item.title} className="rounded p-2 mt-3 bg-stone-800">
-              <button onClick={() => handleOpenProjectClick(index)}>
+            <li key={item.title}>
+              <button
+                className="w-full text-left px-2 py-1 rounded-sm my-1 text-stone-400 hover:text-stone-200 hover:bg-stone-800"
+                onClick={() => handleOpenProjectClick(index)}
+              >
                 {item.title}
               </button>
             </li>
@@ -92,13 +97,13 @@ function App() {
       </div>
       <div className="flex-1 p-10 bg-white">
         {selectedPage === "Add project" && (
-          <ProjectForm
+          <NewProjectForm
             onSaveClick={saveProject}
             onCancelClick={setSelectedPage}
           />
         )}
         {selectedPage === "No project selected" && (
-          <ProjectPage onAddProject={handleAddProjectClick} />
+          <Home onAddProject={handleAddProjectClick} />
         )}
         {selectedPage === "Project" && (
           <Project
